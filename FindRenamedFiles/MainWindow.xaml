@@ -4,9 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FindRenamedFiles"
+        x:Name="_this"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Find and synchronize renamed or moved files" Height="500" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Margin="3" Content="Source:" Target="{Binding ElementName=sourcePathTextBox}" />
+        <TextBox Grid.Column="0" Grid.Row="1" Margin="3" Text="" Name="sourcePathTextBox" />
+        <Label Grid.Column="2" Grid.Row="0" Margin="3" Content="Target:" Target="{Binding ElementName=targetPathTextBox}" />
+        <TextBox Grid.Column="2" Grid.Row="1" Margin="3" Text="" Name="targetPathTextBox" />
+        <Button Grid.Column="1" Grid.Row="0" Margin="3" Content="Compare" Click="Compare_Click" IsDefault="True" Name="compareButton" />
+        <Button Grid.Column="1" Grid.Row="1" Margin="3" Content="Synchronize" IsEnabled="False" Click="Synchronize_Click" Name="synchronizeButton" />
+        <DataGrid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Name="matchesDataGrid" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Source.RelativePath}" Width="*" Header="Source relative path" />
+                <DataGridCheckBoxColumn Binding="{Binding Path=ProcessFile}" Width="100" Header="Process?" />
+                <DataGridTextColumn Binding="{Binding Path=Target.RelativePath}" Width="*" Header="Target relative path" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
